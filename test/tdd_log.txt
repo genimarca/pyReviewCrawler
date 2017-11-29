@@ -1,0 +1,133 @@
+Desarrollo dirigido por Test
+=============================
+
+Requerimientos funcionales del programa
+----------------------------------------
+1.- Aceptar una consulta de búsqueda de opiniones en Internet.
+	1.1.- Sitios web a soportar:
+		 * TripAdvisor
+2.- Aceptar como criterio de búsqueda la lengua en la que deben estar
+escritas las opiniones
+3.- Aceptar como criterio de búsqueda el tipo de objeto de opinión en función de
+la plataforma de donde se descargarán las opiniones. Por ej: Si la 
+plataforma es TripAdvisor, un objeto de opinión puede ser un hotel, un
+monumento, un restaurante...
+4.- Aceptar como criterio de búsqueda la ciudad en la que se encuentra
+el objeto de opinión.
+5.- Aceptar como criterio de búsqueda el objeto de opinión sobre el que 
+se quieren descargar opiniones. Por ej: La Catedral de Jaén.
+6.- Descargar las opiniones del sistio web indicado que responden a los 
+criterios de búsqueda.
+7.- Almacenar permanentemente las opiniones.
+8.- Seleccionar el formato de salida
+	8.1.- Formatos de salida:
+		* CSV (Defecto)
+9.- Determinar destino de la salida.
+	9.1.- Destinos a soportar:
+		* Pantalla (Defecto)
+		* Fichero
+		
+10.- Nº máx. de opiniones a descargar, valor por defecto todas las que se
+puedan descargar.
+
+¡ATENCIÓN!
+Futura iteraciones, configuración de los tiempos de la consulta a la web.
+
+Requerimientos no funcionales
+-----------------------------
+1.- Eficiencia en tiempo y recursos computacionales
+2.- Escalabilidad en relación al nº. de sitios web que se aceptan
+3.- Documentación para permitir la incorporación de nuevos desarrolladores
+4.- Almacenar las opiniones en un formato estándar
+5.- Escalabilidad en relación a los formatos de salida aceptados
+6.- Facilidad de uso
+7.- Ejecución descriptiva configurable
+8.- Informar sobre versión del sistema
+9.- Modo desarrollo que permita la acceder a la información de logging 
+de la ejecución
+10.- Uso de formatos estándares.
+Test unitarios
+---------------
+
+Grupo de tests 1: Argumentos de entrada
+-----------------------------
+Req. funcionalidades: 1, 2, 3, 4, 5, 8, 9
+Req. no funcionales: 6, 7, 8
+
+Test 1: Mostrar ayuda del script
+- Insertar argumento -h, muestra ayuda
+- Insertar argumento --help, muestra ayuda
+- Insertar argumento -h en modo DEV.
+- Insertar argumento --help en modo DEV.
+Estado:
+
+Test 2: Indicar sitio web de búsqueda y configuración de la búsqueda
+- Insertar nombre sitio web y configuración, devuelve no error
+- No insertar nombre sitio web, el sitio web debe ser TripAdvisor.
+Estado: Fallo
+
+Test 3: Indicar formato salida
+- No insertar argumento de formato de salida, devuelve "CSV"
+- Insertar  argumento de formato de salida, devuelve nombre del formato.
+Estado: Superado.
+
+Test 4: Indicar destido de la salida
+- No insertar argumento de destiono de salida, devuelve "stdout"
+- Insertar argumento de destino de salida, devuelve el valor de destino de salida, 
+p. ej: ruta del fichero de salida
+Estado: Superado
+
+Test 5: Aceptar distintos niveles de descripción de la ejecución
+- Insertar argumento --verbose, devuelve no error
+Estado: Superado
+
+Test 6: Aceptar petición sobre versión del sistema
+- Insertar argumento -v/--version para mostrar versión del sistema
+Estado: Superado
+
+Grupo de test 2: Configuración de los criterios de búsqueda
+-----------------------------------------------------------
+
+Req. funcionales: 2, 3, 4, 5
+Req. no funcionales: 10
+
+Test 1: Idioma de las opinones expresado en el código de lengua de la 
+plataforma desde la que se van a descargar las opiniones.
+- Entrada: es, devolver "es"
+Estado: Superado
+Test 2: Tipo de objeto de la opinión de acuerdo al formato/código de la 
+plataforma que se utilice de fuente de la descarga.
+Estado: Superado
+-Entrada: Atractions, devuelve: Atractions
+Test 3: Ciudad del objeto de la opinión
+-Entrada: código de localización en función de la plataforma, en el caso 
+de Jaén sería: g315916. Devuelve, g315916
+Estado: Superado
+Test 4: Objeto de estudio
+Entrada: código del objeto de estudio de acuerdo a la plataforma, en el 
+caso de la catedral de Jaén sería: d519940
+Estado: Superado
+Test 5: Nº de opiniones a descargar
+-Entrada: 20, devuelve 20
+-Entrada: 20, devuelve número entero 20
+-Entrada: -1, devuelve -1 (sin límite).
+-Entrada: nada, devuelve -1
+-
+
+Grupo de test 3: Descarga de todas las opiniones sobre la entidad indicada.
+---------------------------------------------------------------------------
+
+Req. funcionales: 6
+Req. no funcionales: 1, 2, 3, 9
+
+Test 1: Generación de la url de la web del listado de url de opiniones a 
+descargar.
+Entrada: Dominio, Códicto de actividad, código de ciudad, código de entidad. 
+Attraction, g315916, d519940
+Salida: https://www.tripadvisor.es/Attraction_Review-g315916-d519940
+
+Test 2: Descarga del listado de ids de opiniones sobre la entidad
+
+Test 3: Descarga de una opinión
+
+Test 4: Descarga de todas las opiniones

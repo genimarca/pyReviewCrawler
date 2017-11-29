@@ -1,0 +1,9 @@
+---
+-Author:Eugenio Martínez Cámra
+-Lab:SCIIS
+-Sublab:Deep Learning & NLP
+-Organization:Universidad de Granada
+-Aim:Developing of a general crawler of reviews
+-Milestones:
+	-First:Crawler for reviews published in TripAdvisor
+	-Second:...
