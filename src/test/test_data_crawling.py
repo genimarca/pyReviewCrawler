@@ -2,24 +2,34 @@
 Created on 29 nov. 2017
 
 :author: Eugenio Martínez Cámara <emcamara@decsai.ugr.es>
+
+*UNDER DEVELOPMENT*
+
 """
 from unittest import main
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
+import sys
+sys.path.append("/Users/geni/Documents/datos/documentos/trabajo/entornosTrabajo/eclipseOxigen/python/review_crawler/src/")
 
 class TestDataCrawling(TestCase):
 
 
-    @patch("model.DataCrawling")
-    def test_get_reviews(self, DataCrawling):
+    @patch("model.a_data_crawling.ADataCrawling")
+    def test_get_reviews(self, ADataCrawling):
         
-        crawling_handler = DataCrawling()
+        crawling_handler = ADataCrawling()
         
         crawling_handler.build_base_url()
-        crawling_handler.get_reviews_ids.return_value = ["539156073", "543828773"]
+        
+        mock_get_reviews_ids = MagicMock()
+        mock_get_reviews_ids.get_review_ids.return_value = ["539156073", "543828773"]
+        crawling_handler.return_value = mock_get_reviews_ids
+        
         crawling_handler.get_review.return_value = "ñadkfalñdjfañlf"
         
         response_reviews_ids = crawling_handler.get_review_ids()
+        print(response_reviews_ids)
         response_review = crawling_handler.get_review(response_reviews_ids[0])
         
         crawling_handler.build_base_url.assert_called_once_with()
