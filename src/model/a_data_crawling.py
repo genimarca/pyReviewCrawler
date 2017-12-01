@@ -40,10 +40,32 @@ class ADataCrawling(metaclass=ABCMeta):
     def entity_location(self, a_entity_location):
         ...
         
+    @property
+    def entity_id(self):
+        ...
+        
+    @entity_id.setter
+    @abstractmethod
+    def entity_id(self, a_entity_id):
+        ...
+    
+    @property
+    def base_url(self):
+        ...
+        
     @abstractmethod
     def build_base_url(self):
         ...
         
+    @property
+    def max_num_reviews(self):
+        ...
+    
+    @max_num_reviews.setter
+    @abstractmethod
+    def max_num_reviews(self, a_max_num_reviews):
+        ...
+    
     @abstractmethod
     def get_review_ids(self):
         ...
