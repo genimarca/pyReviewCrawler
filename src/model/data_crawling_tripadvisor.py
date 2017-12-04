@@ -5,7 +5,13 @@ Created on 1 dic. 2017
 
 :author: Eugenio Martínez Cámara <emcamara@decsai.ugr.es>
 """
+import re
+import urllib.request as url_request
+import urllib.error as url_error
 from model.a_data_crawling import ADataCrawling
+from time import sleep
+from socket import socket
+
 
 class DataCrawlingTripadvisor(ADataCrawling):
     '''It implements the abstract class ADataCrawling
@@ -18,6 +24,9 @@ class DataCrawlingTripadvisor(ADataCrawling):
         self.__entity_id = ""
         self.__base_url = ""
         self.__max_num_reviews = None
+        self.__timeout = None
+        self.__pause_btween_requessts = None
+        self.__max_attempts = None
     
     
     @property
@@ -68,6 +77,31 @@ class DataCrawlingTripadvisor(ADataCrawling):
     def max_num_reviews(self, a_max_num_reviews):
         self.__max_num_reviews = a_max_num_reviews
         
+    @property
+    def timeout(self):
+        return self.__timeout
+    
+    @timeout.setter
+    def timeout(self, a_timeout):
+        self.__timeout = a_timeout
+    
+    
+    @property
+    def pause_btween_requests(self):
+        return self.__pause_btween_requessts
+    
+    @pause_btween_requests.setter
+    def pause_btween_requests(self, a_pause_btween_requests):
+        self.__pause_btween_requessts = a_pause_btween_requests
+        
+    @property
+    def max_attempts(self):
+        return self.__max_attempts
+    
+    @max_attempts.setter
+    def max_attempts(self, a_max_attempts):
+        self.__max_entries = a_max_attempts
+    
     def build_base_url(self):
         """Build the base url for downloading the reviews
         
@@ -77,8 +111,28 @@ class DataCrawlingTripadvisor(ADataCrawling):
         self.__base_url = "https://www.tripadvisor.%s/%s" % (self.__review_language,
                                                   self.__entity_type)
         
+    def __get_webpage(self, url):
+        """Donwload a web page
+        
+        Returns: A String in case a succesful donwload or Null otherwise
+        """
+        htmlpage = None
+        attempts = 0
+        while attempts < self.__max_attempts and htmlpage is None:
+            try:
+                with url_request.urlopen(url, timeout=self.__timeout) as url_handler:
+                    htmlpage = url_handler.read()
+                    sleep(self.__pause_btween_requessts)
+            except (url_error.URLError, socket.timeout, socket.error):
+                attempts += 1
+        return htmlpage
+                
+            
+        
+        
+    
     def get_review_ids(self):
-        """Donwload the number of ids of reviews indicated by the property
+        """Download the number of ids of reviews indicated by the property
         max_num_reviews.
         
         Return: A list of ids of reviews
@@ -87,6 +141,10 @@ class DataCrawlingTripadvisor(ADataCrawling):
         download_url = "%s_Review-%s-%s-Reviews" % (self.__base_url,
                                                     self.__entity_location,
                                                     self.__entity_id)
-    
+        re_review_id_pattern = re.compile(r'/ShowUserReviews-g%s-d%s-r([0-9]+)-' % 
+                                          (self.__entity_location, self.__entity_id))
+        
+        
+        
     def get_review(self, review_id):
         ADataCrawling.get_review(self, review_id)

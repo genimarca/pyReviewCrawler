@@ -66,6 +66,31 @@ class ADataCrawling(metaclass=ABCMeta):
     def max_num_reviews(self, a_max_num_reviews):
         ...
     
+    @property
+    def timeout(self):
+        ...
+        
+    @timeout.setter
+    @abstractmethod
+    def timeout(self, a_timeout):
+        ...
+    
+    @property
+    def pause_btween_requests(self):
+        ...    
+    
+    @pause_btween_requests.setter
+    def pause_btween_requests(self, a_pause_btween_requests):
+        ...        
+    
+    @property
+    def max_attempts(self):
+        ...    
+    
+    @max_attempts.setter
+    def max_attempts(self, a_max_attempts):
+        ...
+    
     @abstractmethod
     def get_review_ids(self):
         ...
@@ -73,3 +98,4 @@ class ADataCrawling(metaclass=ABCMeta):
     @abstractmethod
     def get_review(self, review_id):
         ...
+        
