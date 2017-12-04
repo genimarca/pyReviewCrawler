@@ -11,6 +11,7 @@ import urllib.error as url_error
 from model.a_data_crawling import ADataCrawling
 from time import sleep
 from socket import socket
+from model.exceptions.reviews_ids_download_error import ReviewsIdsDownloadError
 
 
 class DataCrawlingTripadvisor(ADataCrawling):
@@ -144,7 +145,13 @@ class DataCrawlingTripadvisor(ADataCrawling):
         re_review_id_pattern = re.compile(r'/ShowUserReviews-g%s-d%s-r([0-9]+)-' % 
                                           (self.__entity_location, self.__entity_id))
         
-        
+        htmlwebpage = self.__get_webpage(download_url)
+        review_ids = []
+        if not htmlwebpage:
+            review_ids = None
+            raise ReviewsIdsDownloadError(self.__entity_id)
+        else:
+            re_review_id_pattern.findall(htmlwebpage)
         
     def get_review(self, review_id):
         ADataCrawling.get_review(self, review_id)
