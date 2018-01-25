@@ -22,9 +22,9 @@ class TestDataCrawling(TestCase):
         
         crawling_handler.build_base_url()
         
-        mock_get_reviews_ids = MagicMock()
-        mock_get_reviews_ids.get_review_ids.return_value = ["539156073", "543828773"]
-        crawling_handler.return_value = mock_get_reviews_ids
+        crawling_handler.get_review_ids = MagicMock(name="get_review_ids")
+        crawling_handler.get_review_ids.return_value = ["539156073", "543828773"]
+        #crawling_handler.return_value = mock_get_reviews_ids
         
         crawling_handler.get_review.return_value = "ñadkfalñdjfañlf"
         

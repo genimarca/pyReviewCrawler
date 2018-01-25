@@ -17,7 +17,7 @@ class TestConfigSearch(unittest.TestCase):
 
 
     def setUp(self):
-        ConfigSearchTripadvisor.set_path("../test/test_data/test_config.yaml")
+        ConfigSearchTripadvisor.set_path("../../test/test_data/test_config.yaml")
         ConfigSearchTripadvisor.readall()
     
     def test_opinion_language(self):
@@ -26,7 +26,7 @@ class TestConfigSearch(unittest.TestCase):
         
     def test_type_entity(self):
         type_entity = ConfigSearchTripadvisor.get_option(SearchOptions.TYPE_ENTITY.value)
-        self.assertEqual(type_entity, "Attractions")
+        self.assertEqual(type_entity, "Attraction")
         
     def test_location_entity(self):
         location_entity = ConfigSearchTripadvisor.get_option(SearchOptions.LOCATION_ENTITY.value)

@@ -25,7 +25,7 @@ class TestDataCrawlingTripadvisor(unittest.TestCase):
         
         response_base_url = crawling_handler.base_url
         
-        self.assertEqual(response_base_url, "https://www.tripadvisor.es/Attraction")
+        self.assertEqual(response_base_url, "https://www.tripadvisor.es")
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
