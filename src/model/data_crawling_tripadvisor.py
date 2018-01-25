@@ -212,7 +212,7 @@ class DataCrawlingTripadvisor(ADataCrawling):
         """
         
         re_user_name = re.compile(r"scrname.+>(.+)<", re.S)
-        re_user_id = re.compile()
+        re_user_id = re.compile() #Hacer con selenium
         re_rating = 
         re_title_review
         re_body_review =
