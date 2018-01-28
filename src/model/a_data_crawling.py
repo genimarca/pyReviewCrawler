@@ -53,6 +53,10 @@ class ADataCrawling(metaclass=ABCMeta):
     def base_url(self):
         ...
         
+    @property
+    def review(self):
+        ...
+    
     @abstractmethod
     def build_base_url(self):
         ...

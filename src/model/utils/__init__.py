@@ -7,4 +7,8 @@
 :organization: Universidad de Granada
 """
 
-__all__ = ["search_properties", "config_search"]
+__all__ = ["search_properties",
+           "config_search",
+           "config_search_tripadvisor",
+           "review_fields",
+           "search_options"]
